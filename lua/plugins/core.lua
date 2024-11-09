@@ -6,9 +6,18 @@ return {
     },
   },
   {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        -- ...elided others
+        "graphql-language-service-cli", -- required for graphql-lsp
+      },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = {
-      servers = { eslint = {} },
+      servers = { eslint = {}, graphql = {} },
       setup = {
         eslint = function()
           require("lazyvim.util").lsp.on_attach(function(client)
@@ -23,6 +32,15 @@ return {
       inlay_hints = {
         enabled = true,
         exclude = { "typescript", "typescriptreact" },
+      },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        -- ...elided other configs
+        "graphql",
       },
     },
   },
