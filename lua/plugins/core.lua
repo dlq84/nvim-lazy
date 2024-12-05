@@ -17,14 +17,31 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      servers = { eslint = {}, graphql = {} },
+      servers = {
+        tsserver = { enabled = false },
+        eslint = {},
+        graphql = {},
+        vtsls = {
+          settings = {
+            vtsls = { experimental = { completion = { enableServerSideFuzzyMatch = true, entriesLimit = 30 } } },
+          },
+        },
+        typescript = {
+          preferences = {},
+        },
+      },
       setup = {
         eslint = function()
           require("lazyvim.util").lsp.on_attach(function(client)
             if client.name == "eslint" then
-              client.server_capabilities.documentFormattingProvider = true
+              client.server_capabilities.documentFormattingProvider = nil
+              client.server_capabilities.documentOnTypeFormattingProvider = nil
             elseif client.name == "tsserver" then
-              client.server_capabilities.documentFormattingProvider = false
+              client.server_capabilities.documentFormattingProvider = nil
+              client.server_capabilities.documentOnTypeFormattingProvider = nil
+            elseif client.name == "vtsls" then
+              client.server_capabilities.documentFormattingProvider = nil
+              client.server_capabilities.documentOnTypeFormattingProvider = nil
             end
           end)
         end,
