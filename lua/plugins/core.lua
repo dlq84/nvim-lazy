@@ -29,6 +29,9 @@ return {
         typescript = {
           preferences = {},
         },
+        rust_analyzer = {
+          procMacro = { enable = true },
+        },
       },
       setup = {
         eslint = function()
