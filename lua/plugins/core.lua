@@ -6,13 +6,16 @@ return {
     },
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         -- ...elided others
         "graphql-language-service-cli", -- required for graphql-lsp
       },
     },
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
   },
   {
     "neovim/nvim-lspconfig",
@@ -106,5 +109,14 @@ return {
     event = "User",
     main = "rainbow-delimiters.setup",
     opts = {},
+  },
+  {
+    "akinsho/bufferline.nvim",
+    init = function()
+      local bufline = require("catppuccin.groups.integrations.bufferline")
+      function bufline.get()
+        return bufline.get_theme()
+      end
+    end,
   },
 }
