@@ -11,6 +11,7 @@ return {
       ensure_installed = {
         -- ...elided others
         "graphql-language-service-cli", -- required for graphql-lsp
+        "oxfmt",
       },
     },
   },
@@ -46,6 +47,9 @@ return {
               client.server_capabilities.documentFormattingProvider = nil
               client.server_capabilities.documentOnTypeFormattingProvider = nil
             elseif client.name == "vtsls" then
+              client.server_capabilities.documentFormattingProvider = nil
+              client.server_capabilities.documentOnTypeFormattingProvider = nil
+            elseif client.name == "tsgo" then
               client.server_capabilities.documentFormattingProvider = nil
               client.server_capabilities.documentOnTypeFormattingProvider = nil
             end
