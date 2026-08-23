@@ -25,7 +25,9 @@ return {
         tsserver = { enabled = false },
         eslint = {},
         graphql = {},
+        tsc = {},
         vtsls = {
+          enabled = false,
           settings = {
             vtsls = { experimental = { completion = { enableServerSideFuzzyMatch = true, entriesLimit = 30 } } },
           },
@@ -50,6 +52,9 @@ return {
               client.server_capabilities.documentFormattingProvider = nil
               client.server_capabilities.documentOnTypeFormattingProvider = nil
             elseif client.name == "tsgo" then
+              client.server_capabilities.documentFormattingProvider = nil
+              client.server_capabilities.documentOnTypeFormattingProvider = nil
+            elseif client.name == "tsc" then
               client.server_capabilities.documentFormattingProvider = nil
               client.server_capabilities.documentOnTypeFormattingProvider = nil
             end
@@ -113,5 +118,8 @@ return {
     event = "User",
     main = "rainbow-delimiters.setup",
     opts = {},
+  },
+  {
+    "jorlly-collado-castro/opencode-lazy.nvim",
   },
 }
