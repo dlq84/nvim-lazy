@@ -18,6 +18,7 @@ return {
   {
     "mason-org/mason-lspconfig.nvim",
   },
+  { "geigerzaehler/tree-sitter-jinja2", config = true },
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -25,7 +26,6 @@ return {
         tsserver = { enabled = false },
         eslint = {},
         graphql = {},
-        tsc = {},
         vtsls = {
           enabled = false,
           settings = {
@@ -41,24 +41,13 @@ return {
       },
       setup = {
         eslint = function()
-          require("lazyvim.util").lsp.on_attach(function(client)
-            if client.name == "eslint" then
+          -- let conform/prettier own formatting for these servers
+          for _, name in ipairs({ "eslint", "tsserver", "vtsls", "tsgo", "tsc" }) do
+            Snacks.util.lsp.on({ name = name }, function(_, client)
               client.server_capabilities.documentFormattingProvider = nil
               client.server_capabilities.documentOnTypeFormattingProvider = nil
-            elseif client.name == "tsserver" then
-              client.server_capabilities.documentFormattingProvider = nil
-              client.server_capabilities.documentOnTypeFormattingProvider = nil
-            elseif client.name == "vtsls" then
-              client.server_capabilities.documentFormattingProvider = nil
-              client.server_capabilities.documentOnTypeFormattingProvider = nil
-            elseif client.name == "tsgo" then
-              client.server_capabilities.documentFormattingProvider = nil
-              client.server_capabilities.documentOnTypeFormattingProvider = nil
-            elseif client.name == "tsc" then
-              client.server_capabilities.documentFormattingProvider = nil
-              client.server_capabilities.documentOnTypeFormattingProvider = nil
-            end
-          end)
+            end)
+          end
         end,
       },
       inlay_hints = {
